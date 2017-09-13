@@ -1,6 +1,0 @@
-com\iBlog\service\UserInfoService.class
-com\iBlog\test\Test.class
-com\iBlog\service\ApiTest.class
-com\iBlog\common\_SqlSessionFactory.class
-com\iBlog\dao\UserInfoDao.class
-com\iBlog\entity\UserInfo.class

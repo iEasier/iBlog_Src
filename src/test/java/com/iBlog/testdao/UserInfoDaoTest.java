@@ -1,8 +1,6 @@
 package com.iBlog.testdao;
 
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,8 +8,6 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-
-import com.iBlog.entity.UserInfo;
 
 public class UserInfoDaoTest {
 	private static HashMap<Object, Object> result_Option = new HashMap<Object, Object>();

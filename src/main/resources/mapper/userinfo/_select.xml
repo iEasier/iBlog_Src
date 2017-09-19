@@ -2,12 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.iBlog.mapper.userinfo._select">
 	<select id="authentication" parameterType="Map" resultType="Map">
-		select * from _userinfo where
+		select nick,head_photo,telephone,address,create_time from _userinfo
+		where
 		username=#{username} and
 		password=#{password}
 	</select>
 
-	<select id="getNote_Content" parameterType="Map" resultType="com.iBlog.entity.WriteNote">
-		select * from _note_table where username=#{username};
+	<select id="getWriteNote" parameterType="Map"
+		resultType="com.iBlog.entity.WriteNote">
+		select note_title as noteTitle, note_content as
+		noteContent,username from _note_table where username=#{username};
 	</select>
 </mapper>

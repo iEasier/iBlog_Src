@@ -3,6 +3,7 @@ package com.iBlog.service;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -66,22 +67,18 @@ public class UserInfoService {
 	@ResponseBody
 	public HashMap<Object, Object> authentication(
 			@RequestBody Map<String, String> UserInfo) {
-		System.out.println("UserInfo");
 		SqlSession sqlSession = sqlSessionFactory.openSession();
 		String authentication = "authentication";
-		String getNote_Content = "getNote_Content";
 		Map<Object, Object> userInfo_Result = sqlSession.selectOne(
 				authentication, UserInfo);
-		WriteNote writeNote_Result = sqlSession.selectOne(getNote_Content,
-				userInfo_Result);
 		if (userInfo_Result != null) {
+			this.result_Option.put("retcode", "0");
 			this.result_Option.put("userinfo", userInfo_Result);
-			this.result_Option.put("writeNote", writeNote_Result);
 		} else {
-			this.result_Option.put("status", false);
+			this.result_Option.put("retcode", "-1");
 		}
 		sqlSession.close();
-		this.result_Option.put("retcode", "0");
+
 		return this.result_Option;
 	}
 }

@@ -3,7 +3,6 @@ package com.iBlog.service;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -13,10 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.iBlog.common._SqlSessionFactory;
-import com.iBlog.entity.UserInfo;
-import com.iBlog.entity.WriteNote;
 
 @Controller
 public class UserInfoService {
@@ -24,16 +20,11 @@ public class UserInfoService {
 			._getSessionFactory();
 	private HashMap<Object, Object> result_Option = new HashMap<Object, Object>();
 
-	@RequestMapping(value = "/getUserInfoByUserName", method = RequestMethod.POST)
-	@ResponseBody
-	public String getPassWordByUserName(String UserName) {
-		SqlSession sqlSession = sqlSessionFactory.openSession();
-		String select = "getUserInfoByUserName";// 映射sql的标识字符串
-		String password = (String) sqlSession.selectOne(select, UserName);
-		sqlSession.close();
-		return password;
-	}
-
+	/**
+	 * @Description: 增加用户接口
+	 * @param UserInfo
+	 * @return:是否成功 0 成功，-1失败
+	 */
 	@RequestMapping(value = "/AddUserInfo", method = RequestMethod.POST)
 	@ResponseBody
 	public HashMap<Object, Object> addUserInfo(
@@ -42,19 +33,16 @@ public class UserInfoService {
 		UserInfo.put("create_time", new Timestamp(currentTime));
 		SqlSession sqlSession = sqlSessionFactory.openSession();
 		String insert = "addUserInfo";
-		sqlSession.insert(insert, UserInfo);
-		sqlSession.commit();
-		sqlSession.close();
-		result_Option.put("retcode", 0);
-		return result_Option;
-	}
-
-	public void updateUser(UserInfo user) {
-		SqlSession sqlSession = sqlSessionFactory.openSession();
-		String updateUserInfo = "updateUserInfo";
-		sqlSession.update(updateUserInfo, user);
-		sqlSession.commit();
-		sqlSession.close();
+		try {
+			sqlSession.insert(insert, UserInfo);
+			sqlSession.commit();
+			sqlSession.close();
+			this.result_Option.put("retcode", "0");
+		} catch (Exception e) {
+			this.result_Option.put("retcode", "-1");
+			this.result_Option.put("errormsg", e.getMessage());
+		}
+		return this.result_Option;
 	}
 
 	/**
@@ -69,16 +57,20 @@ public class UserInfoService {
 			@RequestBody Map<String, String> UserInfo) {
 		SqlSession sqlSession = sqlSessionFactory.openSession();
 		String authentication = "authentication";
-		Map<Object, Object> userInfo_Result = sqlSession.selectOne(
-				authentication, UserInfo);
-		if (userInfo_Result != null) {
-			this.result_Option.put("retcode", "0");
-			this.result_Option.put("userinfo", userInfo_Result);
-		} else {
+		try {
+			Map<Object, Object> userInfo_Result = sqlSession.selectOne(
+					authentication, UserInfo);
+			if (userInfo_Result != null) {
+				this.result_Option.put("retcode", "0");
+				this.result_Option.put("userinfo", userInfo_Result);
+			} else {
+				this.result_Option.put("retcode", "-1");
+			}
+		} catch (Exception e) {
 			this.result_Option.put("retcode", "-1");
+			this.result_Option.put("errormsg", e.getMessage());
 		}
 		sqlSession.close();
-
 		return this.result_Option;
 	}
 }

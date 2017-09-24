@@ -22,15 +22,16 @@ public class getWriteNoteInfo {
 			._getSessionFactory();
 
 	/**
-	 * @Description: 用户鉴权接口，由于判断用户及返回用户信息
+	 * @Description: 用户笔记接口，调取后返回 该用户名下所有WriteNote数组
 	 * @param UserInfo
-	 *            : 用户信息 主要为username，password
-	 * @return:Map Authentication Result
+	 *            : 用户信息 主要为username
+	 * @return:Map WriteNote Result
 	 */
 	@RequestMapping(value = "/getWriteNote", method = RequestMethod.POST)
 	@ResponseBody
 	public HashMap<Object, Object> authentication(
 			@RequestBody Map<String, String> UserInfo) {
+		this.result_Option.clear();
 		SqlSession sqlSession = sqlSessionFactory.openSession();
 		String getWriteNote = "getWriteNote";
 		List<WriteNote> WriteNote_list = sqlSession.selectList(getWriteNote,

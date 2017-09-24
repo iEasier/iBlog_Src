@@ -29,8 +29,9 @@ public class UserInfoService {
 	@ResponseBody
 	public HashMap<Object, Object> addUserInfo(
 			@RequestBody Map<Object, Object> UserInfo) {
+		this.result_Option.clear();
 		long currentTime = new Date().getTime();
-		UserInfo.put("create_time", new Timestamp(currentTime));
+		UserInfo.put("createTime", new Timestamp(currentTime));
 		SqlSession sqlSession = sqlSessionFactory.openSession();
 		String insert = "addUserInfo";
 		try {
@@ -38,9 +39,10 @@ public class UserInfoService {
 			sqlSession.commit();
 			sqlSession.close();
 			this.result_Option.put("retcode", "0");
+			this.result_Option.put("retmsg", "Add Userinfo Success");
 		} catch (Exception e) {
 			this.result_Option.put("retcode", "-1");
-			this.result_Option.put("errormsg", e.getMessage());
+			this.result_Option.put("errormsg", "Add Userinfo Failure");
 		}
 		return this.result_Option;
 	}
@@ -55,6 +57,7 @@ public class UserInfoService {
 	@ResponseBody
 	public HashMap<Object, Object> authentication(
 			@RequestBody Map<String, String> UserInfo) {
+		this.result_Option.clear();
 		SqlSession sqlSession = sqlSessionFactory.openSession();
 		String authentication = "authentication";
 		try {

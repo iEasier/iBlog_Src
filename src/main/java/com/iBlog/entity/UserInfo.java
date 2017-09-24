@@ -3,7 +3,7 @@ public class UserInfo {
 	private String username;
 	private String password;
 	private String nick;
-	private String head_photo;
+	private String headPhoto;
 	private String telephone;
 	private String address;
 	private String createTime;
@@ -25,11 +25,11 @@ public class UserInfo {
 	public void setNick(String nick) {
 		this.nick = nick;
 	}
-	public String getHead_photo() {
-		return head_photo;
+	public String getHeadPhoto() {
+		return headPhoto;
 	}
-	public void setHead_photo(String head_photo) {
-		this.head_photo = head_photo;
+	public void setHeadPhoto(String headPhoto) {
+		this.headPhoto = headPhoto;
 	}
 	public String getTelephone() {
 		return telephone;
@@ -49,21 +49,15 @@ public class UserInfo {
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
-	public UserInfo(String username, String password, String nick,
-			String head_photo, String telephone, String address,
-			String createTime) {
-		super();
-		this.username = username;
-		this.password = password;
-		this.nick = nick;
-		this.head_photo = head_photo;
-		this.telephone = telephone;
-		this.address = address;
-		this.createTime = createTime;
+	@Override
+	public String toString() {
+		return "UserInfo [username=" + username + ", password=" + password
+				+ ", nick=" + nick + ", headPhoto=" + headPhoto
+				+ ", telephone=" + telephone + ", address=" + address
+				+ ", createTime=" + createTime + "]";
 	}
 	public UserInfo() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 }
